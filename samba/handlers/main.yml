@@ -1,0 +1,8 @@
+---
+# handlers file for samba
+#
+  - name: restart samba
+    ansible.builtin.systemd:
+      name: smbd
+      enabled: yes
+      state: restarted

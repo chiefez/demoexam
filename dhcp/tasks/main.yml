@@ -1,0 +1,19 @@
+---
+# tasks file for dhcp
+
+  - name: install dhcp
+    ansible.builtin.apt:
+      update_cache: true
+      name: isc-dhcp-server
+      state: present
+
+  - name: edit conf file
+    ansible.builtin.template:
+      src: "./dhcp/templates/dhcpd.conf.j2"
+      dest: "/etc/dhcp/dhcpd.conf"
+
+  - name: add inetface
+    ansible.builtin.template:
+      src: "./dhcp/templates/isc-dhcp-server.j2"
+      dest: "/etc/default/isc-dhcp-server"
+      

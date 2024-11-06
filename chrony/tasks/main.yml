@@ -1,0 +1,27 @@
+---
+# tasks file for chrony
+#
+  - name: install chrony
+    ansible.builtin.apt:
+      update_cache: yes
+      name: chrony
+      state: present
+
+        # - name: rm conf files
+        #ansible.builtin.file:
+        #path: "{{ workDir }}chrony.conf"
+        # state: absent
+        #
+  - name: conf template srv
+    ansible.builtin.template:
+      src: "./chrony/templates/srv.conf.j2"
+      dest: "{{ confDir }}"
+
+        #  - name: conf template cli
+        #ansible.builtin.template:
+        #src: "./chrony/templates/cli.conf.j2"
+        #dest: "{{ confDir }}"
+
+  - name: set timezone
+    community.general.timezone:
+      name: Asia/Tomsk

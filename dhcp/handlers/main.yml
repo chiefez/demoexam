@@ -1,0 +1,8 @@
+---
+# handlers file for dhcp
+
+  - name: enable and restart dhcp
+    ansible.builtin.systemd:
+      name: isc-dhcp-server
+      enabled: true
+      state: restarted

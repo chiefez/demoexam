@@ -1,0 +1,20 @@
+[global]
+workgroup = au-team.irpo 
+security = user
+map to guest = Bad User
+passdb backend = tdbsam
+
+[netlogon]
+path = /srv/samba/netlogon
+read only = no
+
+[profiles]
+path = /srv/samba/profiles
+read only = no
+
+[hq]
+path = /srv/samba/hq
+browsable = yes
+writable = yes
+guest ok = yes
+

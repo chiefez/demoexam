@@ -1,0 +1,5 @@
+---
+# vars file for chrony
+
+ confDir: "/etc/chrony/chrony.conf"
+   

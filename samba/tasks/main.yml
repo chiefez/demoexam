@@ -1,0 +1,72 @@
+---
+
+- name: install samba
+  ansible.builtin.apt:
+    name:
+      - samba
+      - smbclient
+    state: present
+    update_cache: yes
+
+- name: create samba dirs
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: '0777'
+  loop:
+    - "/srv/samba/netlogon"
+    - "/srv/samba/profiles"
+    - "/srv/samba/hq"
+
+- name: template samba
+  ansible.builtin.template:
+    src: "./samba/templates/smb.conf.j2"
+    dest: "/etc/samba/smb.conf"
+
+- name: add hq group
+  ansible.builtin.group:
+    name: hq
+    state: present
+
+- name: add hq users
+  vars:
+    user_password: "{{ 'password' }}"  
+  ansible.builtin.user:
+    name: "{{ item }}"
+    create_home: yes
+    shell: /bin/bash
+    group: hq
+    password: "{{ user_password }}"
+  with_items:
+    - user1.hq
+    - user2.hq
+    - user3.hq
+    - user4.hq
+    - user5.hq
+
+- name: add users to samba and set pass
+  vars:
+    samba_password: "password"  
+  ansible.builtin.shell: "echo -e '{{ samba_password }}\n{{ samba_password }}' | smbpasswd -s -a {{ item }}"
+  loop:
+    - user1.hq
+    - user2.hq
+    - user3.hq
+    - user4.hq
+    - user5.hq
+  args:
+    executable: /bin/bash
+
+- name: template hq
+  ansible.builtin.template:
+    src: "./samba/templates/hq.j2"
+    dest: "/etc/sudoers.d/hq"
+
+- name: enable samba users
+  ansible.builtin.command: smbpasswd -e {{ item }}
+  loop:
+    - user1.hq
+    - user2.hq
+    - user3.hq
+    - user4.hq
+    - user5.hq

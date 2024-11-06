@@ -1,0 +1,18 @@
+# Создать пользователей sshuser на hq-srv и br-srvю. Пароль P@ssword, пользователь sshuser должен иметь запускать sudo. id 1010
+# Пользователя net_admin с паролем P@ssw0rd 
+#Создать 5 пользователей user№.hq, и поместитьв группу hq
+#настройка ssh
+#GRE туннель
+#samba
+#
+#
+---
+  - name: demoexam
+    hosts: TEST_SERVER
+    become: yes
+    roles:
+      - dhcp #выдать на интерфейс
+      - dns
+      - chrony
+      - samba
+

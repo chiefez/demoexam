@@ -1,0 +1,41 @@
+---
+# tasks file for dns
+
+  - name: install bind9
+    ansible.builtin.apt:
+      update_cache: yes
+      name: "{{ item }}"
+      state: present
+    with_items:
+      - "bind9"
+      - "dnsutils"
+
+        #  - name: rm conf files
+        #ansible.builtin.file:
+        #path: "{{ item }}"
+        #state: absent
+        #with_items:
+        #- "{{ workDir }}named.conf.options"
+        #- "{{ workDir }}named.conf.default-zones"
+        #- "{{ workDir }}hq"
+        #- "{{ workDir }}hq_arpa"
+
+  - name: template hq
+    ansible.builtin.template:
+      src: "{{ templateDir }}hq.j2"
+      dest: "{{ workDir }}hq"
+
+  - name: template hq_arpa
+    ansible.builtin.template:
+      src: "{{ templateDir }}hq_arpa.j2"
+      dest: "{{ workDir }}hq_arpa"
+
+  - name: template named.conf.options
+    ansible.builtin.template:
+      src: "{{ templateDir }}named.conf.options.j2"
+      dest: "{{ workDir }}named.conf.options"
+
+  - name: template default-zones
+    ansible.builtin.template:
+      src: "{{ templateDir }}named.conf.default-zones.j2"
+      dest: "{{ workDir }}named.conf.default-zones" 

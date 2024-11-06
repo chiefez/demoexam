@@ -1,0 +1,12 @@
+zone "au-team.irpo" {
+	type master;
+        file "/etc/bind/hq";
+        allow-update { any; };
+        allow-transfer { any; };
+       };
+zone "1.168.192.in-addr.arpa" {
+        type master;
+        file "/etc/bind/hq_arpa";
+        allow-update { any; };
+       };
+
