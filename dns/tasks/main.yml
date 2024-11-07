@@ -29,6 +29,16 @@
     ansible.builtin.template:
       src: "{{ templateDir }}hq_arpa.j2"
       dest: "{{ workDir }}hq_arpa"
+      
+  - name: template hq_arpa
+    ansible.builtin.template:
+      src: "{{ templateDir }}hq_arpa_2.j2"
+      dest: "{{ workDir }}hq_arpa_2"
+
+  - name: template hq_arpa
+    ansible.builtin.template:
+      src: "{{ templateDir }}hq_arpa_3.j2"
+      dest: "{{ workDir }}hq_arpa_3"
 
   - name: template named.conf.options
     ansible.builtin.template:
