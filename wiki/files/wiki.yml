@@ -1,0 +1,30 @@
+---
+
+services:
+  mariadb:
+    image: mariadb:latest
+    container_name: mariadb
+    environment: 
+      - MYSQL_ROOT_PASSWORD=WikiP@ssw0rd
+      - MYSQL_DATABASE=mediawiki
+      - MYSQL_USER=wiki
+      - MYSQL_PASSOWRD=Wiki@P@ssw0rd
+    volumes:
+      - mariadb_data:/var/lib/mysql
+
+  wiki:
+    image: mediawiki:latest
+    container_name: wiki
+    ports:
+      - "8080:80"
+    environment:
+      - MEDIAWIKI_DB_HOST=mariadb
+      - MEDIAWIKI_DB_NAME=mediawiki
+      - MEDIAWIKI_DB_USER=wiki
+      - MEDIAWIKI_DB_PASSWORD=WikiP@ssw0rd
+    volumes:
+      - ./LocalSettings.php:/var/www/html/LocalSettings.php
+    depends_on: 
+      - mariadb
+volumes:
+  mariadb_data:

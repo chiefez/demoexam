@@ -1,0 +1,8 @@
+---
+# handlers file for wiki
+
+  - name: enable and restart docker
+    ansible.builtin.systemd:
+      name: docker
+      enabled: yes
+      state: started
