@@ -9,4 +9,14 @@ zone "1.168.192.in-addr.arpa" {
         file "/etc/bind/hq_arpa";
         allow-update { any; };
        };
+zone "2.168.192.in-addr.arpa" {
+        type master;
+        file "/etc/bind/hq_arpa_2";
+        allow-update { any; };
+       };
+zone "3.168.192.in-addr.arpa" {
+        type master;
+        file "/etc/bind/hq_arpa_3";
+        allow-update { any; };
+       };
 
