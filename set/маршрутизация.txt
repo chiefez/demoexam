@@ -1,0 +1,32 @@
+apt install frr
+
+редактировать файл /etc/frr/daemons
+ospfd=yes
+sudo systemctl restart frr
+
+редактирования файла /etc/frr/frr.conf
+
+hq-rtr
+router ospf
+ ospf router-id 10.10.10.1
+ network 10.10.10.1/29 area 0
+ area 0 authentication message-digest
+!
+interface gre1
+ ip ospf authentication message-digest
+ ip ospf message-digest-key 1 md5 xxXX1234
+br-rtr
+
+router ospf
+ ospf router-id 10.10.10.2
+ network 10.10.10.2/29 area 0
+ area 0 authentication message-digest
+!
+interface gre1
+ ip ospf authentication message-digest
+ ip ospf message-digest-key 1 md5 xxXX1234
+
+
+Проверка ospf
+sudo vtysh -c "show ip ospf neighbor"
+sudo vtysh -c "show ip route ospf"

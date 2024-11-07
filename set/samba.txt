@@ -1,0 +1,21 @@
+sudo apt install samba libpam-winbind
+----------
+После того, как сервер перезагрузится, нужно удалить существующий файл smb.conf, а так же — любые файлы баз данных Samba (это .tdb и .ldb-файлы). Для того, чтобы найти директории, содержащие эти файлы, выполните следующие команды:
+mbd -b | grep "CONFIGFILE"
+smbd -b | egrep "LOCKDIR|STATEDIR|CACHEDIR|PRIVATE_DIR"
+============
+
+[global]
+   workgroup = MYDOMAIN
+   security = user
+   map to guest = Bad User
+   passdb backend = tdbsam
+
+[netlogon]
+   path = /srv/samba/netlogon
+   read only = no
+
+[profiles]
+   path = /srv/samba/profiles
+   read only = no
+

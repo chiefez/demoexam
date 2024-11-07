@@ -1,0 +1,39 @@
+sudo vim /etc/sysctl.conf 
+sudo sysctl -p
+sudo apt install iptables-persistent
+#
+iptables -A INPUT -p gre -j ACCEPT
+
+#
+iptables -I INPUT -p udp --dport 67 -j ACCEPT
+iptables -I INPUT 1 -p udp --dport 53 -j ACCEPT
+
+
+sudo iptables -L
+sudo iptables -t nat -L
+sudo sh -c "iptables-save > /etc/iptables/rules.v4"
+
+
+===
+# ISP
+sudo iptables -t nat -A POSTROUTING -o ens33 -j MASQUERADE
+sudo iptables -t nat -A POSTROUTING -o ens33 -p gre -j RETURN
+sudo iptables -t nat -L
+sudo sh -c "iptables-save > /etc/iptables/rules.v4"
+==============
+# Проброс порта 80 на BR-RTR к порту 8080 на BR-SRV
+iptables -t nat -A PREROUTING -p tcp --dport 80 -j DNAT --to-destination 192.168.2.2:8080
+iptables -A FORWARD -p tcp -d 192.168.2.2 --dport 8080 -j ACCEPT
+
+# Проброс порта 2024 на HQ-SRV
+iptables -t nat -A PREROUTING -p tcp --dport 2024 -j DNAT --to-destination 192.168.2.2:2024
+iptables -A FORWARD -p tcp -d 192.168.2.2 --dport 2024 -j ACCEPT
+
+# Проброс порта 2024 на BR-SRV
+iptables -t nat -A PREROUTING -p tcp --dport 2024 -j DNAT --to-destination 192.168.2.2:2024
+iptables -A FORWARD -p tcp -d 192.168.2.2 --dport 2024 -j ACCEPT
+
+
+
+
+

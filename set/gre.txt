@@ -1,0 +1,15 @@
+
+
+tunnels:
+    gre1:
+        mode: gre
+	remote: 172.16.5.2
+	local: 172.16.4.2
+	addresses: [ 10.10.10.1/29 ]
+
+tunnels:
+    gre1:
+        mode: gre
+	remote: 172.16.4.2
+	local: 172.16.5.2
+	addresses: [ 10.10.10.2/29 ]

@@ -1,0 +1,11 @@
+на hq-rtr
+sudo ip route add 192.168.184.0/24 via 172.16.4.1
+
+sudo iptables -t nat -A POSTROUTING -o ens33 -j MASQUERADE
+sudo iptaгыbles -t nat -A POSTROUTING -o ens33 -p gre -j RETURN
+
+sudo iptables -L
+sudo iptables -t nat -L
+sudo sh -c "iptables-save > /etc/iptables/rules.v4"
+
+
