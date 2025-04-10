@@ -1,0 +1,14 @@
+lsmod | grep 8021q
+apt install vlan
+modprobe 8021q
+echo 8021q >> /etc/modules
+
+auto ens34.100
+iface ens34.100 inet static
+address 192.168.100.3/26
+vlan-raw-device ens34
+
+auto ens34.200
+iface ens34.200 inet static
+address 192.168.200.3/28
+vlan-raw-device ens34

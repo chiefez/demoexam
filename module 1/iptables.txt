@@ -1,0 +1,17 @@
+ISP
+iptables –t nat –A POSTROUTING –s 172.16.4.0/28 –o ens33 –j MASQUERADE
+iptables –t nat –A POSTROUTING –s 172.16.5.0/28 –o ens33 –j MASQUERADE  
+
+HQ-RTR
+iptables –t nat –A POSTROUTING –s 192.168.100.0/26 –o ens33 –j MASQUERADE
+iptables –t nat –A POSTROUTING –s 192.168.200.0/28 –o ens33 –j MASQUERADE
+
+BR-RTR
+iptables –t nat –A POSTROUTING –s 192.168.0.0/27 –o ens33 –j MASQUERADE  
+
+
+
+
+echo 1 > /proc/sys/net/ipv4/ip_forward
+net.ipv4.ip_forward=1
+nano /etc/sysctl.conf

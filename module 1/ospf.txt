@@ -1,0 +1,18 @@
+apt install frr
+
+nano /etc/frr/daemons
+ospfd=yes
+
+systemctl restart frr
+vtysh
+conf t 
+router ospf
+passive-interface default
+ospf router-id x.x.x.x
+network x.x.x.x/x area x
+area x authentication
+
+interface gre1
+no ip ospf passive
+ip ospf authentication
+ip ospf authentication-key password

@@ -1,0 +1,14 @@
+useradd sshuser -u 1010 -U
+passwd sshuser
+
+
+visudo
+sshuser ALL=(ALL:ALL) ALL
+
+port 2024
+AllowUsers sshuser
+MaxAuthTries 2
+Banner /etc/ssh-banner
+
+nano /etc/ssh-banner
+Authorized access only
