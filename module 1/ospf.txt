@@ -17,3 +17,6 @@ interface gre1
 no ip ospf passive
 ip ospf authentication
 ip ospf authentication-key password
+
+
+no ip passive ospf
