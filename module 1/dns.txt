@@ -1,0 +1,47 @@
+apt install bind9 dnsutils
+
+nano /etc/bind/named.conf.default-zones
+
+zone "au-team.irpo"{
+	type master;
+	file "/etc/bind/au-team.irpo";
+};
+
+zone "100.168.192.in-addr.arpa" {
+	type master;
+	file "/etc/bind/au-team.irpo_obr";
+};
+
+zone "200.168.192.in-addr.arpa" {
+	type master;
+	file "/etc/bind/au-team.irpo_hqobr";
+};
+
+cp /etc/bind/db.local /etc/bind/au-team.irpo - прямая зона
+cp /etc/bind/db.127 /etc/bind/au-team.irpo_obr - обратная зона
+
+
+nano /etc/bind/au-team.irpo
+
+@	IN	SOA	au-team.irpo.	root.au-team.irpo.
+
+;
+@	IN	NS	au-team.irpo.
+@	IN	A	192.168.100.2
+hq-rtr	IN	A	192.168.100.1
+hq-srv	IN	A	192.168.100.2
+hq-cli	IN	A	192.168.200.4
+br-rtr	IN	A	192.168.0.1
+hq-srv	IN 	A 	192.168.0.2
+moodle	CNAME	hq-rtr.au-team.irpo
+wiki	CNAME	hq-rtr.au-team.irpo
+
+nano /etc/bind/au-team.irpo_obr
+@	IN	NS	au.team.irpo.
+1	IN	PTR	hq-rtr.au-team.irpo.
+2	IN	PTR	hq-srv.au-team.irpo.
+
+nano /etc/bind/au-team.irpo_hqobr
+
+@	IN	NS	au-team.irpo.
+1	IN	PTR	hq-cli.au-team.irpo.
