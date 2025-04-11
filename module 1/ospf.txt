@@ -7,6 +7,7 @@ systemctl restart frr
 vtysh
 conf t 
 router ospf
+no passive-interface gre1
 passive-interface default
 ospf router-id x.x.x.x
 network x.x.x.x/x area x
