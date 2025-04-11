@@ -20,3 +20,5 @@ HQ-CLI:
 
 BR-SRV:
 192.168.0.2/27
+
+timedatectl set-timezone Asia/Tomsk
