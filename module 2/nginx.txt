@@ -18,3 +18,5 @@ server {
         proxy_set_header Host $host;
         }
 }
+
+ln -s /etc/nginx/sites-available/rp /etc/nginx/sites-enabled/
