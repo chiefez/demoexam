@@ -12,3 +12,6 @@ Banner /etc/ssh-banner
 
 nano /etc/ssh-banner
 Authorized access only
+
+
+mkhomedir_helper sshuser
