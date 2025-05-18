@@ -34,3 +34,7 @@ volumes:
 
 docker volume create dbvolume
 docker-compose -f wiki.yml up -d
+
+
+scp -P 2024 /home/debian/Downloads/LocalSettings.php sshuser@192.168.0.2:/home/sshuser
+mv /home/sshuser/LocalSettings.php /home/debian/
