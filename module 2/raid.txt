@@ -1,0 +1,27 @@
+apt install mdadm
+lsblk
+mdadm --create --verbose /dev/md0 -l 5 -n 3 /dev/sd{b,c,d}
+
+
+mdadm --detail --scan | tee /etc/mdadm.conf
+update-initramfs -u
+mkfs.ext4 /dev/md0
+mkdir /raid5
+mount /dev/md0 /raid5
+echo '/dev/md0 /raid5 ext4 defaults 0 0' | tee -a /etc/fstab
+
+
+-------------------------------
+apt install nfs-kernel-server
+mkdir /raid5/nfs
+chmod 777 /raid5/nfs
+
+echo '/raid5/nfs 192.168.200.0/28(rw,sync,no_subtree_check)' | tee -a /etc/exports
+systemctl restart nfs-kernel-server
+--------------------------------
+apt install nfs-common
+mkdir /mnt/nfs
+echo '192.168.100.3:/raid5/nfs /mnt/nfs nfs defaults 0 0' | tee -a /etc/fstab
+systemctl daemon-reload
+mount -a
+df -h

@@ -1,0 +1,20 @@
+apt install nginx
+
+nano /etc/nginx/sites-available/rp
+server {
+        listen 80;
+        server_name moodle.au-team.irpo;
+        location / {
+        proxy_pass http://192.168.100.3:80;
+        proxy_set_header Host $host;
+    }
+}
+
+server {
+        listen 80;
+        server_name wiki.au-team.irpo;
+        location / {
+        proxy_pass http://192.168.0.2:8080;
+        proxy_set_header Host $host;
+        }
+}

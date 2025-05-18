@@ -1,0 +1,21 @@
+br-rtr
+# Проброс 80 → 8080 (Wiki)
+iptables -t nat -A PREROUTING -i ens33 -p tcp --dport 80 -j DNAT --to-destination 192.168.0.2:8080
+
+# Проброс 2024 → 2024
+iptables -t nat -A PREROUTING -i ens33 -p tcp --dport 2024 -j DNAT --to-destination 192.168.0.2:2024
+
+# Разрешение форвардинга
+iptables -A FORWARD -p tcp -d 192.168.0.2 --dport 8080 -j ACCEPT
+iptables -A FORWARD -p tcp -d 192.168.0.2 --dport 2024 -j ACCEPT
+
+
+hq-rtr
+# Проброс 2024 → 2024
+iptables -t nat -A PREROUTING -i ens33 -p tcp --dport 2024 -j DNAT --to-destination 192.168.100.3:2024
+
+# Разрешение форвардинга
+iptables -A FORWARD -p tcp -d 192.168.100.3 --dport 2024 -j ACCEPT
+
+
+sudo netfilter-persistent save

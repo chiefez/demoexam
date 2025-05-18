@@ -1,0 +1,21 @@
+apt intall chrony
+nano /etc/chrony/chrony.conf
+
+local stratum 5
+allow 192.168.100.3
+allow 192.168.200.0/28
+allow 10.10.0.2
+allow 192.168.0.2
+
+#pool 2.debian
+
+systemctl restart chrony
+
+chronyc clients
+------------------------------------
+apt install chrony
+nano /etc/chrony/chrony.conf
+server 192.168.100.1 iburst
+
+#pool 2.debian
+chronyc sources

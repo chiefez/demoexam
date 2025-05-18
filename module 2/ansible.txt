@@ -1,0 +1,15 @@
+apt install ansible
+ssh-keygen -t rsa
+
+ssh-copy-id -p 2024 sshuser@192.168.100.2
+
+mkdir /etc/ansible
+nano /etc/ansible/demo
+[hq]
+192.168.100.3 ansible_port=2024 ansible=sshuser
+192.168.200.4 ansible_user=debian
+172.16.4.2 ansible_user=net_admin
+[br]
+172.16.5.2 ansible_user=net_admin
+
+ansible all -i /etc/ansible/demo -m ping
