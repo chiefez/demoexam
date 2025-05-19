@@ -13,9 +13,11 @@ EXIT;
 cd /var/www/html
 wget https://packaging.moodle.org/stable405/moodle-latest-405.tgz
 
-sudo mkdir /var/www/moodledata
-sudo chown -R www-data:www-data /var/www/moodledata
-sudo chmod -R 755 /var/www/moodledata
+chown -R www-data:www-data /var/www/html/moodle
+chmod -R 755 /var/www/html/moodle
+mkdir /var/moodledata
+chown -R www-data:www-data /var/moodledata
+chmod -R 755 /var/moodledata
 
 sudo nano /etc/apache2/sites-available/moodle.conf
 <VirtualHost *:80>
