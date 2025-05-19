@@ -11,10 +11,7 @@ FLUSH PRIVILEGES;
 EXIT;
 
 cd /var/www/html
-sudo git clone https://github.com/moodle/moodle.git
-cd moodle
-sudo git branch -a 
-sudo git checkout MOODLE_401_STABLE
+wget https://packaging.moodle.org/stable405/moodle-latest-405.tgz
 
 sudo mkdir /var/www/moodledata
 sudo chown -R www-data:www-data /var/www/moodledata
